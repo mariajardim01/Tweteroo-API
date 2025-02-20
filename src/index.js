@@ -121,8 +121,8 @@ app.put('/tweets/:id', async (req,res)=>{
             tweet: tweet
         }
         const response = await db.collection("tweets").updateOne({_id: new ObjectId(id)}, { $set: updatedTweet } )
-        if (response.error){
-            res.sendStatus(httpStatus.NOT_FOUND)
+        if (response.modifiedCount == 0){
+           return res.sendStatus(httpStatus.NOT_FOUND)
         }
         res.sendStatus(httpStatus.NO_CONTENT)
     }
